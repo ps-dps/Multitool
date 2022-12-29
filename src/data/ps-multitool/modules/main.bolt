@@ -1,0 +1,3 @@
+
+function ps-multitool:hello_world:
+    say HELLO WORLD(s)

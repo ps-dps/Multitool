@@ -1,0 +1,18 @@
+name: Multitool
+author: PuckiSilver
+version: v1.0.0
+output: build
+require:
+  - bolt
+
+data_pack:
+  load:
+    - src
+  name: Multitool
+  description: Combine all the tools into the Multitool
+
+pipeline:
+  - mecha
+meta:
+  bolt:
+    entrypoint: ps-multitool:main
