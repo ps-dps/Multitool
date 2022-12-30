@@ -1,6 +1,6 @@
 name: Multitool
 author: PuckiSilver
-version: v1.0.0
+version: v4.0.0
 output: build
 require:
   - bolt
