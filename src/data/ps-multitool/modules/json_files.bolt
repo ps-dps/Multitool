@@ -193,7 +193,7 @@ for material in materials:
             "name": f'minecraft:{material}_pickaxe',
             "functions": [{
                 "function": "minecraft:set_nbt",
-                "tag": "{ps-multitool:1b}" },
+                "tag": "{ps-multitool:1b,CustomModelData:74201}" },
                 {
                 "function": "minecraft:set_lore",
                 "lore": [[
