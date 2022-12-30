@@ -6,6 +6,7 @@ for tool in tools:
     item_tag f'ps-multitool:tool/{tool}' {"values":[]}
 for material in materials:
     item_tag f'ps-multitool:material/{material}' {"values":[]}
+item_tag ps-multitool:tools {"values":[]}
 
 for tool in tools:
     for material in materials:
@@ -23,6 +24,13 @@ for tool in tools:
                     "required": false
                 }
             ]}
+    append item_tag ps-multitool:tools {
+        "values": [
+            {
+                "id": f'#ps-multitool:tool/{tool}',
+                "required": false
+            }
+        ]}
 
 for tool in tools:
     predicate f'ps-multitool:tool/{tool}' {
