@@ -1,0 +1,111 @@
+
+tools = ["axe", "hoe", "pickaxe", "shovel"]
+materials = ["diamond", "golden", "iron", "netherite", "stone", "wooden"]
+
+for tool in tools:
+    item_tag f'ps-multitool:tool/{tool}' {
+        "values":[
+            {
+                "id": f'minecraft:netherite_{tool}',
+                "required": false
+            },
+            {
+                "id": f'minecraft:diamond_{tool}',
+                "required": false
+            },
+            {
+                "id": f'minecraft:iron_{tool}',
+                "required": false
+            },
+            {
+                "id": f'minecraft:stone_{tool}',
+                "required": false
+            },
+            {
+                "id": f'minecraft:wooden_{tool}',
+                "required": false
+            },
+            {
+                "id": f'minecraft:golden_{tool}',
+                "required": false
+            }
+        ]}
+
+    predicate f'ps-multitool:tool/{tool}' {
+        "condition": "minecraft:alternative", "terms": [{
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+                "tool": "minecraft:player",
+                "equipment": {
+                    "mainhand": {
+                        "tag": f'ps-multitool:tool/{tool}',
+                        "nbt": "{ps-multitool:1b}" 
+                        }
+                    }
+                }
+            }
+        ]}
+
+for material in materials:
+    item_tag f'ps-multitool:material/{material}' {
+        "values":[
+            {
+                "id": f'minecraft:{material}_axe',
+                "required": false
+            },
+            {
+                "id": f'minecraft:{material}_hoe',
+                "required": false
+            },
+            {
+                "id": f'minecraft:{material}_pickaxe',
+                "required": false
+            },
+            {
+                "id": f'minecraft:{material}_shovel',
+                "required": false
+            }
+        ]}
+
+block_tag ps-multitool:tillable {
+    "values":[
+        {
+            "id": f'minecraft:grass_block',
+            "required": false
+        },
+        {
+            "id": f'minecraft:dirt',
+            "required": false
+        },
+        {
+            "id": f'minecraft:farm_land',
+            "required": false
+        },
+        {
+            "id": f'minecraft:dirt_path',
+            "required": false
+        },
+        {
+            "id": f'minecraft:coarse_dirt',
+            "required": false
+        },
+        {
+            "id": f'minecraft:rooted_dirt',
+            "required": false
+        }
+    ]}
+
+predicate ps-multitool:is_sneaking {
+    "condition": "minecraft:entity_properties",
+    "entity": "this",
+    "predicate": {
+        "flags": {
+            "is_sneaking": true
+        }
+    }}
+
+predicate ps-multitool:repair_chance {
+    "condition": "minecraft:random_chance",
+    "chance": 0.7 # 30% chance to lose dura, a little worse then the mathematically accurate 25%
+    }
