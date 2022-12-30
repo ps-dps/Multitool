@@ -49,6 +49,22 @@ for tool in tools:
             }
         ]}
 
+predicate f'ps-multitool:has_multitool' {
+    "condition": "minecraft:alternative", "terms": [{
+        "condition": "minecraft:entity_properties",
+        "entity": "this",
+        "predicate": {
+            "tool": "minecraft:player",
+            "equipment": {
+                "mainhand": {
+                    "tag": "ps-multitool:tools",
+                    "nbt": "{ps-multitool:1b}" 
+                    }
+                }
+            }
+        }
+    ]}
+
 block_tag ps-multitool:tillable {
     "values":[
         {
