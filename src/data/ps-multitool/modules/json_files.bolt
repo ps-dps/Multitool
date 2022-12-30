@@ -3,34 +3,28 @@ tools = ["axe", "hoe", "pickaxe", "shovel"]
 materials = ["diamond", "golden", "iron", "netherite", "stone", "wooden"]
 
 for tool in tools:
-    item_tag f'ps-multitool:tool/{tool}' {
-        "values":[
-            {
-                "id": f'minecraft:netherite_{tool}',
-                "required": false
-            },
-            {
-                "id": f'minecraft:diamond_{tool}',
-                "required": false
-            },
-            {
-                "id": f'minecraft:iron_{tool}',
-                "required": false
-            },
-            {
-                "id": f'minecraft:stone_{tool}',
-                "required": false
-            },
-            {
-                "id": f'minecraft:wooden_{tool}',
-                "required": false
-            },
-            {
-                "id": f'minecraft:golden_{tool}',
-                "required": false
-            }
-        ]}
+    item_tag f'ps-multitool:tool/{tool}' {"values":[]}
+for material in materials:
+    item_tag f'ps-multitool:material/{material}' {"values":[]}
 
+for tool in tools:
+    for material in materials:
+        append item_tag f'ps-multitool:tool/{tool}' {
+            "values": [
+                {
+                    "id": f'minecraft:{material}_{tool}',
+                    "required": false
+                }
+            ]}
+        append item_tag f'ps-multitool:material/{material}' {
+            "values": [
+                {
+                    "id": f'minecraft:{material}_{tool}',
+                    "required": false
+                }
+            ]}
+
+for tool in tools:
     predicate f'ps-multitool:tool/{tool}' {
         "condition": "minecraft:alternative", "terms": [{
             "condition": "minecraft:entity_properties",
@@ -44,27 +38,6 @@ for tool in tools:
                         }
                     }
                 }
-            }
-        ]}
-
-for material in materials:
-    item_tag f'ps-multitool:material/{material}' {
-        "values":[
-            {
-                "id": f'minecraft:{material}_axe',
-                "required": false
-            },
-            {
-                "id": f'minecraft:{material}_hoe',
-                "required": false
-            },
-            {
-                "id": f'minecraft:{material}_pickaxe',
-                "required": false
-            },
-            {
-                "id": f'minecraft:{material}_shovel',
-                "required": false
             }
         ]}
 
