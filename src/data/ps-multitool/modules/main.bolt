@@ -45,3 +45,10 @@ function ps-multitool:tick:
 function ps-multitool:keep_dura:
     advancement revoke @s only ps-multitool:keep_dura
     item modify entity @s weapon.mainhand ps-multitool:keep_dura
+
+for material in json.materials:
+    function f'ps-multitool:craft/{material}_multitool':
+        advancement revoke @s only f'ps-multitool:craft/{material}_multitool'
+        recipe take @s f'ps-multitool:{material}_multitool'
+        clear @s knowledge_book
+        loot give @s loot f'ps-multitool:{material}_multitool'

@@ -172,3 +172,47 @@ item_modifier ps-multitool:keep_dura {
         "target": "Damage",
         "op": "merge"
     }]}
+
+for material in materials:
+    #> RECIPES
+    recipe f'ps-multitool:{material}_multitool' {
+        "type": "minecraft:crafting_shapeless", "ingredients": [
+            { "item": f'minecraft:{material}_axe' },
+            { "item": f'minecraft:{material}_hoe' },
+            { "item": f'minecraft:{material}_pickaxe' },
+            { "item": f'minecraft:{material}_shovel' }],
+        "result": {
+            "item": "minecraft:knowledge_book"
+        }}
+
+    #> LOOT TABLES FOR CRATING
+    loot_table f'ps-multitool:{material}_multitool' {
+        "pools": [{ "rolls": 1, "entries": [
+            {
+            "type": "minecraft:item",
+            "name": f'minecraft:{material}_pickaxe',
+            "functions": [{
+                "function": "minecraft:set_nbt",
+                "tag": "{ps-multitool:1b}" },
+                {
+                "function": "minecraft:set_lore",
+                "lore": [[
+                    { "text": "M", "color": "#00ff00", "italic": false },
+                    { "text": "u", "color": "#00e093", "italic": false },
+                    { "text": "l", "color": "#00baca", "italic": false },
+                    { "text": "t", "color": "#008fca", "italic": false },
+                    { "text": "i", "color": "#00639a", "italic": false },
+                    { "text": "t", "color": "#008fca", "italic": false },
+                    { "text": "o", "color": "#00baca", "italic": false },
+                    { "text": "o", "color": "#00e093", "italic": false },
+                    { "text": "l", "color": "#00ff00", "italic": false }
+        ]]}]}]}]}
+
+    #> ADVANCEMENTS FOR CRATING
+    advancement f'ps-multitool:craft/{material}_multitool' {
+        "criteria": { "requirement": { "trigger": "minecraft:recipe_unlocked",
+            "conditions": {
+                "recipe": f'ps-multitool:{material}_multitool' }}},
+        "rewards": {
+            "function": f'ps-multitool:craft/{material}_multitool'
+        }}
