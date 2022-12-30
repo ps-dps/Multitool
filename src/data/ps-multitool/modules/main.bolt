@@ -9,11 +9,13 @@ function ps-multitool:load:
 
 function ps-multitool:tick:
     schedule function ps-multitool:tick 1t replace
+    scoreboard players reset @s ps-multitool
     execute as @a[predicate=ps-multitool:has_multitool]
         at @s
         anchored eyes
         positioned ^ ^ ^
         run function ps-multitool:multitool_tick:
+            scoreboard players set @s ps-multitool 1
             execute unless score .ray_range ps-multitool matches 1.. run scoreboard players set .ray_range ps-multitool 16
             scoreboard players remove .ray_range ps-multitool 1
             execute if block ~ ~ ~ #minecraft:mineable/axe
@@ -39,3 +41,7 @@ function ps-multitool:tick:
                 unless block ~ ~ ~ #minecraft:mineable/shovel
                 positioned ^ ^ ^0.3
                 run function ps-multitool:multitool_tick
+
+function ps-multitool:keep_dura:
+    advancement revoke @s only ps-multitool:keep_dura
+    item modify entity @s weapon.mainhand ps-multitool:keep_dura

@@ -143,3 +143,32 @@ predicate ps-multitool:repair_chance {
     "condition": "minecraft:random_chance",
     "chance": 0.7 # 30% chance to lose dura, a little worse then the mathematically accurate 25%
     }
+
+#> ADVANCEMENT TO RESTORE DURABILITY
+advancement ps-multitool:keep_dura {
+    "criteria": { "requirement": { "trigger": "minecraft:item_durability_changed",
+        "conditions": { "player": [{
+            "condition": "minecraft:value_check",
+            "value": {
+                "type": "minecraft:score",
+                "target": "this",
+                "score": "ps-multitool" },
+            "range": 1 },
+            {
+            "condition": "minecraft:random_chance",
+            "chance": 0.7
+        }]}
+    }},
+    "rewards": {
+        "function": "ps-multitool:keep_dura"
+    }}
+
+#> ITEM MODIFIER TO PREVENT DURA LOSS
+item_modifier ps-multitool:keep_dura {
+    "function": "minecraft:copy_nbt",
+    "source": "this",
+    "ops": [{
+        "source": "SelectedItem.tag.Damage",
+        "target": "Damage",
+        "op": "merge"
+    }]}
