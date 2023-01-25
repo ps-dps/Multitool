@@ -3,4 +3,6 @@
 .beet_cache
 __pycache__
 build
-*.pdn
+release
+_private
+temp*
