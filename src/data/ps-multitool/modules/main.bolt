@@ -9,7 +9,7 @@ function ps-multitool:load:
 
 function ps-multitool:tick:
     schedule function ps-multitool:tick 1t replace
-    scoreboard players reset @s ps-multitool
+    scoreboard players reset @a ps-multitool
     execute as @a[predicate=ps-multitool:has_multitool]
         at @s
         anchored eyes
