@@ -1,4 +1,4 @@
-# <img src="src/pack.png" height=25> **Multitool**
+# <img src="images/pack.png" height=25> **Multitool**
 
 Do you **hate it** when your whole inventory is **cluttered by tools**?
 
