@@ -1,21 +1,16 @@
 name: Multitool
 author: PuckiSilver
-version: v4.0.1
+version: v4.1.1
 output: build
-require:
-  - bolt
 
 data_pack:
-  load:
-    - libs/lantern-load.zip
-    - src
   name: Multitool
   description: Combine all the tools into the Multitool
+  zipped: true
 
 pipeline:
-  - mecha
+  - plugins.generate_multitool
   - plugins.credit
 meta:
-  bolt:
-    entrypoint: ps-multitool:main
+  multitool: multitool_config.yml
   credit: [ps-multitool]

@@ -1,9 +1,9 @@
 materials:
-  - wooden
-  - stone
-  - iron
-  - golden
-  - diamond
-  - netherite
-overwrites:
-  iron_pickaxe: golden_pickaxe
+  - minecraft:wooden
+  - minecraft:stone
+  - minecraft:iron
+  - minecraft:golden
+  - minecraft:diamond
+  - minecraft:netherite
+# overwrites:
+#   minecraft:diamond_pickaxe: minecraft:cactus
