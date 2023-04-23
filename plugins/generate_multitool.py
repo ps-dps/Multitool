@@ -1,6 +1,9 @@
-from PIL import Image
 from beet import Advancement, Context, ExtraPin, FunctionTag, Function, ItemModifier, ItemTag, LootTable, PngFile, Predicate, BlockTag, Recipe, Texture
 import yaml
+try:
+    from PIL import Image
+except:
+    ...
 
 def beet_default(ctx: Context):
     config_path = ctx.meta.get('multitool')
@@ -39,7 +42,10 @@ def add_lantern_load(ctx: Context):
     )
 
 def add_multitool_base(ctx: Context):
-    ctx.data.icon = Texture(Image.open('images/pack.png'))
+    try:
+        ctx.data.icon = Texture(Image.open('images/pack.png'))
+    except:
+        ...
     ctx.data.function_tags["load:load"] = FunctionTag({"values":["ps-multitool:load"]})
     ctx.data.functions["ps-multitool:load"] = Function([
         "scoreboard objectives add ps-multitool dummy",
