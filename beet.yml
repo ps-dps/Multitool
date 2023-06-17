@@ -6,7 +6,7 @@ output: build
 data_pack:
   name: Multitool
   description: Combine all the tools into the Multitool
-  zipped: false
+  zipped: true
 
 pipeline:
   - plugins.generate_multitool
