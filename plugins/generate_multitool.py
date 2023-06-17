@@ -75,7 +75,7 @@ def add_multitool_base(ctx: Context):
         {"function": "minecraft:copy_nbt","source": "this","ops": [{"source": "SelectedItem.tag.Damage","target": "Damage","op": "merge"}]}
     )
     ctx.data.predicates["ps-multitool:has_multitool"] = Predicate({
-        "condition": "minecraft:alternative", "terms": [{ "condition": "minecraft:entity_properties", "entity": "this", "predicate": { "tool": "minecraft:player",
+        "condition": "minecraft:any_of", "terms": [{ "condition": "minecraft:entity_properties", "entity": "this", "predicate": { "tool": "minecraft:player",
             "equipment": { "mainhand": {
                 "tag": "ps-multitool:tools",
                 "nbt": "{ps-multitool:1b}" }}}
@@ -171,7 +171,7 @@ def generate_from_config(ctx: Context, cfg: dict):
         ctx.data.item_tags[f'ps-multitool:tool/{tool}'] = ItemTag(
             {"values": [{'id':f'{overwrites.get(material+"_"+tool,material+"_"+tool)}','required':False} for material in materials]})
         ctx.data.predicates[f'ps-multitool:tool/{tool}'] = Predicate({
-            "condition": "minecraft:alternative", "terms": [{ "condition": "minecraft:entity_properties", "entity": "this", "predicate": { "tool": "minecraft:player", "equipment": {
+            "condition": "minecraft:any_of", "terms": [{ "condition": "minecraft:entity_properties", "entity": "this", "predicate": { "tool": "minecraft:player", "equipment": {
                 "mainhand": {
                     "tag": f'ps-multitool:tool/{tool}',
                     "nbt": "{ps-multitool:1b}" }}}}]})
