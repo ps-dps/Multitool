@@ -75,7 +75,7 @@ def add_multitool_base(ctx: Context):
         {"function": "minecraft:copy_nbt","source": "this","ops": [{"source": "SelectedItem.tag.Damage","target": "Damage","op": "merge"}]}
     )
     ctx.data.predicates["ps-multitool:has_multitool"] = Predicate({
-        "condition": "minecraft:any_of", "terms": [{ "condition": "minecraft:entity_properties", "entity": "this", "predicate": { "tool": "minecraft:player",
+        "condition": "minecraft:any_of", "terms": [{ "condition": "minecraft:entity_properties", "entity": "this", "predicate": {
             "equipment": { "mainhand": {
                 "tag": "ps-multitool:tools",
                 "nbt": "{ps-multitool:1b}" }}}
