@@ -71,6 +71,23 @@ def add_multitool_base(ctx: Context):
         "advancement revoke @s only ps-multitool:keep_dura",
         "item modify entity @s weapon.mainhand ps-multitool:keep_dura",
     ])
+    ctx.data.advancements["ps-multitool:keep_dura"] = Advancement({
+    "criteria": { "requirement": { "trigger": "minecraft:item_durability_changed",
+        "conditions": { "player": [{
+            "condition": "minecraft:value_check",
+            "value": {
+                "type": "minecraft:score",
+                "target": "this",
+                "score": "ps-multitool" },
+            "range": 1 },
+            {
+            "condition": "minecraft:random_chance",
+            "chance": 0.7
+        }]}
+    }},
+    "rewards": {
+        "function": "ps-multitool:keep_dura"
+    }})
     ctx.data.item_modifiers["ps-multitool:keep_dura"] = ItemModifier(
         {"function": "minecraft:copy_nbt","source": "this","ops": [{"source": "SelectedItem.tag.Damage","target": "Damage","op": "merge"}]}
     )
