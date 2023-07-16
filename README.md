@@ -15,7 +15,7 @@ It supports any enchantment that you can normally slap on a tool.
 The tool **only loses durability 30% of the time** since it is made from 4 tools.<br>
 This only increases the effective durability by 3.333 times and not 4 times.
 
-Mutlitool even supports **resource packs**, like [this one](https://www.planetminecraft.com/texture-pack/multitool-halberds/) by [Crafterick](https://www.planetminecraft.com/member/craftrick/), it turns the **Multitool into a halberd**!
+Mutlitool even supports **resource packs**, like [this one](https://modrinth.com/resourcepack/dukette-halberds) by [Dukette](https://modrinth.com/user/theDukette), it turns the **Multitool into a halberd**!
 
 ## **How to get**
 
