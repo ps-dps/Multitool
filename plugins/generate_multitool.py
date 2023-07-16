@@ -141,7 +141,7 @@ def generate_from_config(ctx: Context, cfg: dict):
     for material in materials:
         ctx.data.functions[f'ps-multitool:craft/{material.split(":")[1]}_multitool'] = Function([
             f'advancement revoke @s only ps-multitool:craft/{material.split(":")[1]}_multitool',
-            f'recipe take @s ps-multitool:{material.split(":")[1]}_multitool',
+            # f'recipe take @s ps-multitool:{material.split(":")[1]}_multitool',
             'clear @s knowledge_book',
             f'loot give @s loot ps-multitool:{material.split(":")[1]}_multitool',
         ])
@@ -168,8 +168,8 @@ def generate_from_config(ctx: Context, cfg: dict):
                     { "text": "o", "color": "#00e093", "italic": False },
                     { "text": "l", "color": "#00ff00", "italic": False },
         ]]}]}]}]})
-        ctx.data.advancements[f'ps-multitool:craft/{material.split(":")[1]}_multitool'] = Advancement({ "criteria": { "requirement": { "trigger": "minecraft:recipe_unlocked", "conditions": {
-            "recipe": f'ps-multitool:{material.split(":")[1]}_multitool' }}},
+        ctx.data.advancements[f'ps-multitool:craft/{material.split(":")[1]}_multitool'] = Advancement({ "criteria": { "requirement": { "trigger": "minecraft:recipe_crafted", "conditions": {
+            "recipe_id": f'ps-multitool:{material.split(":")[1]}_multitool' }}},
             "rewards": { "function": f'ps-multitool:craft/{material.split(":")[1]}_multitool' }})
 
     for tool in tools:
