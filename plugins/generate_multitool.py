@@ -141,7 +141,6 @@ def generate_from_config(ctx: Context, cfg: dict):
     for material in materials:
         ctx.data.functions[f'ps-multitool:craft/{material.split(":")[1]}_multitool'] = Function([
             f'advancement revoke @s only ps-multitool:craft/{material.split(":")[1]}_multitool',
-            # f'recipe take @s ps-multitool:{material.split(":")[1]}_multitool',
             'clear @s knowledge_book',
             f'loot give @s loot ps-multitool:{material.split(":")[1]}_multitool',
         ])
