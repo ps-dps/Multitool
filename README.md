@@ -48,14 +48,4 @@ You can generate your **own Multitool** data pack simply by **configuring a conf
 4. Move to this folder with a terminal and run `beet`, it should create a folder called `build` with your data pack in it
 
 ---
-Check me out on other platforms:
-
-<a href="https://github.com/PuckiSilver" target="_blank">
-  <img src="https://github.githubassets.com/favicons/favicon-dark.svg" height="40" width="40"/>
-</a>
-<a href="https://modrinth.com/user/PuckiSilver" target="_blank">
-  <img src="https://docs.modrinth.com/img/logo.svg" height="40" width="40"/>
-</a>
-<a href="https://www.planetminecraft.com/member/puckisilver" target="_blank">
-  <img src="https://www.planetminecraft.com/images/layout/favicon-64.png" height="40" width="40"/>
-</a>
+[![PuckiSilver on GitHub](https://raw.githubusercontent.com/PuckiSilver/static-files/main/link_logos/GitHub.png)](https://github.com/PuckiSilver)[![PuckiSilver on modrinth](https://raw.githubusercontent.com/PuckiSilver/static-files/main/link_logos/modrinth.png)](https://modrinth.com/user/PuckiSilver)[![PuckiSilver on PlanetMinecraft](https://raw.githubusercontent.com/PuckiSilver/static-files/main/link_logos/PlanetMinecraft.png)](https://planetminecraft.com/m/PuckiSilver)[![PuckiSilver on PayPal](https://raw.githubusercontent.com/PuckiSilver/static-files/main/link_logos/PayPal.png)](https://paypal.me/puckisilver)
