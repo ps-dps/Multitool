@@ -1,9 +1,15 @@
 materials:
-  - minecraft:wooden
-  - minecraft:stone
-  - minecraft:iron
-  - minecraft:golden
-  - minecraft:diamond
-  - minecraft:netherite
+  - m: minecraft:wooden
+    d: 177
+  - m: minecraft:stone
+    d: 393
+  - m: minecraft:iron
+    d: 750
+  - m: minecraft:golden
+    d: 96
+  - m: minecraft:diamond
+    d: 4683
+  - m: minecraft:netherite
+    d: 6093
 # overwrites:
 #   minecraft:diamond_pickaxe: minecraft:cactus
