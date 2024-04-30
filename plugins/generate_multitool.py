@@ -63,13 +63,13 @@ def add_multitool_base(ctx: Context):
         "execute if block ~ ~ ~ #minecraft:mineable/pickaxe unless items entity @s weapon.mainhand #ps-multitool:tool/pickaxe run item modify entity @s weapon.mainhand ps-multitool:swap/pickaxe",
         "execute if block ~ ~ ~ #minecraft:mineable/shovel unless predicate ps-multitool:should_hoe unless items entity @s weapon.mainhand #ps-multitool:tool/shovel run item modify entity @s weapon.mainhand ps-multitool:swap/shovel",
         "execute if predicate ps-multitool:should_hoe unless items entity @s weapon.mainhand #ps-multitool:tool/hoe run item modify entity @s weapon.mainhand ps-multitool:swap/hoe",
-        "execute if score .ray_range ps-multitool matches 1.. unless block ~ ~ ~ #minecraft:mineable/axe unless block ~ ~ ~ #minecraft:mineable/hoe unless block ~ ~ ~ #minecraft:mineable/pickaxe unless block ~ ~ ~ #minecraft:mineable/shovel positioned ^ ^ ^0.3 run function ps-multitool:multitool_tick",
+        "execute if score .ray_range ps-multitool matches 1.. unless block ~ ~ ~ #ps-multitool:mineable positioned ^ ^ ^0.3 run function ps-multitool:multitool_tick",
     ])
     ctx.data.predicates["ps-multitool:has_multitool"] = Predicate(
         { "condition": "minecraft:entity_properties", "entity": "this", "predicate": {
             "equipment": { "mainhand": {
                 "items": "#ps-multitool:tools",
-                "predicate": { "minecraft:custom_data": { "ps-multitool": 1 }}
+                "predicates": { "minecraft:custom_data": { "ps-multitool": 1 }}
     }}}})
     ctx.data.predicates["ps-multitool:should_hoe"] = Predicate({
         "condition": "minecraft:all_of", "terms": [
@@ -79,12 +79,18 @@ def add_multitool_base(ctx: Context):
                 "block": { "blocks": "#ps-multitool:tillable" }}
     }]})
     ctx.data.block_tags["ps-multitool:tillable"] = BlockTag({ "values": [
-        { "id": "minecraft:grass_block", "required": False },
-        { "id": "minecraft:dirt", "required": False },
-        { "id": "minecraft:farmland", "required": False },
-        { "id": "minecraft:dirt_path", "required": False },
-        { "id": "minecraft:coarse_dirt", "required": False },
-        { "id": "minecraft:rooted_dirt", "required": False },
+        { "required": False, "id": "minecraft:grass_block" },
+        { "required": False, "id": "minecraft:coarse_dirt" },
+        { "required": False, "id": "minecraft:rooted_dirt" },
+        { "required": False, "id": "minecraft:dirt_path" },
+        { "required": False, "id": "minecraft:farmland" },
+        { "required": False, "id": "minecraft:dirt" },
+    ]})
+    ctx.data.block_tags["ps-multitool:mineable"] = BlockTag({ "values": [
+        { "required": False, "id": "#minecraft:mineable/pickaxe" },
+        { "required": False, "id": "#minecraft:mineable/shovel" },
+        { "required": False, "id": "#minecraft:mineable/axe" },
+        { "required": False, "id": "#minecraft:mineable/hoe" },
     ]})
 
 def generate_from_config(ctx: Context, cfg: dict):
@@ -111,58 +117,71 @@ def generate_from_config(ctx: Context, cfg: dict):
             return False
 
     for material in materials:
-        ctx.data.item_tags[f'ps-multitool:material/{material["m"].split(":")[1]}'] = ItemTag(
+        material_name = material["m"].split(':')[1]
+        ctx.data.item_tags[f'ps-multitool:material/{material_name}'] = ItemTag(
             {"values": [{'id':f'{overwrites.get(material["m"]+"_"+tool,material["m"]+"_"+tool)}','required':False} for tool in tools]})
-        ctx.data.recipes[f'ps-multitool:{material["m"].split(":")[1]}_multitool'] = Recipe({ "type": "minecraft:crafting_shapeless",
+        rules = [{
+            "blocks": f'#minecraft:mineable/{tool}',
+            "correct_for_drops": True,
+            "speed": material["s"],
+        } for tool in tools]
+        rules.insert(0, {
+            "blocks": material.get("incorrect","#minecraft:incorrect_for_"+material_name+"_tool"),
+            "correct_for_drops": False,
+        })
+        ctx.data.recipes[f'ps-multitool:{material_name}_multitool'] = Recipe({
+            "type": "minecraft:crafting_shapeless",
+            "category": "equipment",
             "ingredients": [{ "item": f'{overwrites.get(material["m"]+"_"+tool,material["m"]+"_"+tool)}' } for tool in tools ],
             "result": {
                 "id": f'{overwrites.get(material["m"]+"_pickaxe",material["m"]+"_pickaxe")}',
                 "components": {
                     "minecraft:custom_model_data": 74201,
-                    "minecraft:custom_data": { "ps-multitool": material["d"] },
+                    "minecraft:custom_data": { "ps-multitool": 1 },
+                    "minecraft:item_name": ('['
+                        '{ "text": "M", "color": "#00ff00", "italic": False },'
+                        '{ "text": "u", "color": "#00e093", "italic": False },'
+                        '{ "text": "l", "color": "#00baca", "italic": False },'
+                        '{ "text": "t", "color": "#008fca", "italic": False },'
+                        '{ "text": "i", "color": "#00639a", "italic": False },'
+                        '{ "text": "t", "color": "#008fca", "italic": False },'
+                        '{ "text": "o", "color": "#00baca", "italic": False },'
+                        '{ "text": "o", "color": "#00e093", "italic": False },'
+                        '{ "text": "l", "color": "#00ff00", "italic": False }'
+                    ']'),
+                    "minecraft:max_damage": material["d"],
+                    "minecraft:tool": { "rules": rules },
                 }
             }})
-        ctx.data.loot_tables[f'ps-multitool:{material["m"].split(":")[1]}_multitool'] = LootTable({ "pools": [{ "rolls": 1, "entries": [{ "type": "minecraft:item",
-            "name": f'{overwrites.get(material["m"]+"_pickaxe",material["m"]+"_pickaxe")}',
-            "functions": [{
-                "function": "minecraft:set_nbt",
-                "tag": "{ps-multitool:1b,CustomModelData:74201}" },
-            {
-                "function": "minecraft:set_lore",
-                "lore": [[
-                    { "text": "M", "color": "#00ff00", "italic": False },
-                    { "text": "u", "color": "#00e093", "italic": False },
-                    { "text": "l", "color": "#00baca", "italic": False },
-                    { "text": "t", "color": "#008fca", "italic": False },
-                    { "text": "i", "color": "#00639a", "italic": False },
-                    { "text": "t", "color": "#008fca", "italic": False },
-                    { "text": "o", "color": "#00baca", "italic": False },
-                    { "text": "o", "color": "#00e093", "italic": False },
-                    { "text": "l", "color": "#00ff00", "italic": False },
-        ]]}]}]}]})
-        ctx.data.advancements[f'ps-multitool:craft/{material["m"].split(":")[1]}_multitool'] = Advancement({ "criteria": { "requirement": { "trigger": "minecraft:recipe_crafted", "conditions": {
-            "recipe_id": f'ps-multitool:{material["m"].split(":")[1]}_multitool' }}},
-            "rewards": { "function": f'ps-multitool:craft/{material["m"].split(":")[1]}_multitool' }})
+        ctx.data.advancements[f'ps-multitool:unlock_{material_name}_multitool_recipe'] = Advancement({
+            "criteria": { "requirement": {
+                "trigger": "minecraft:inventory_changed",
+                "conditions": { "items": [{ "items": f'#ps-multitool:material/{material_name}' }]}
+            }},
+            "rewards": { "recipes": [ f'ps-multitool:{material_name}_multitool' ]}
+        })
 
     for tool in tools:
-        ctx.data.loot_tables[f'ps-multitool:swap/{tool}'] = LootTable(
-            {"pools":[{"rolls":1,"entries":[{
-                "type": "minecraft:item",
-                "name": f'{overwrites.get(material["m"]+"_"+tool,material["m"]+"_"+tool)}',
-                "conditions": [{ "condition": "minecraft:entity_properties", "entity": "this", "predicate": { "equipment": {
-                    "mainhand": {
-                        "tag": f'ps-multitool:material/{material["m"].split(":")[1]}' }}}}],
-                "functions": [{ "function": "minecraft:copy_nbt", "source": "this", "ops": [{
-                    "source": "SelectedItem.tag",
-                    "target": "{}",
-                    "op": "merge" }]}]
-            } for material in materials ]}]})
+        ctx.data.item_modifiers[f'ps-multitool:swap/{tool}'] = ItemModifier([
+            {
+                "function": "minecraft:set_item",
+                "item": material["m"]+"_"+tool,
+                "conditions": [{
+                    "condition": "minecraft:entity_properties",
+                    "entity": "this",
+                    "predicate": { "equipment": {
+                        "mainhand": { "items": f'#ps-multitool:material/{material["m"].split(":")[1]}' }
+                    }}
+                }]
+            } for material in materials
+        ])
         ctx.data.item_tags[f'ps-multitool:tool/{tool}'] = ItemTag(
-            {"values": [{'id':f'{overwrites.get(material["m"]+"_"+tool,material["m"]+"_"+tool)}','required':False} for material in materials]})
-        ctx.data.predicates[f'ps-multitool:tool/{tool}'] = Predicate({ "condition": "minecraft:entity_properties", "entity": "this", "predicate": { "tool": "minecraft:player", "equipment": {
-            "mainhand": {
-                "items": f'#ps-multitool:tool/{tool}',
-                "predicate": { "minecraft:custom_data": { "ps-multitool": 1 }}}}}})
+            {"values": [
+                {
+                    'id':f'{overwrites.get(material["m"]+"_"+tool,material["m"]+"_"+tool)}',
+                    'required':False
+                } for material in materials
+            ]})
 
     ctx.data.item_tags['ps-multitool:tools'] = ItemTag({ "values": [
         { "id": f'#ps-multitool:tool/{tool}', "required": False } for tool in tools ]})

@@ -1,15 +1,22 @@
 materials:
   - m: minecraft:wooden
     d: 177
+    s: 2
   - m: minecraft:stone
     d: 393
+    s: 4
   - m: minecraft:iron
     d: 750
+    s: 6
   - m: minecraft:golden
     d: 96
+    s: 12
+    incorrect: '#minecraft:incorrect_for_gold_tool'
   - m: minecraft:diamond
     d: 4683
+    s: 8
   - m: minecraft:netherite
     d: 6093
+    s: 9
 # overwrites:
 #   minecraft:diamond_pickaxe: minecraft:cactus
