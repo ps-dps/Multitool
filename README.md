@@ -1,19 +1,23 @@
 # <img src="images/pack.png" height=25> **Multitool**
 
-Do you **hate it** when your whole inventory is **cluttered by tools**?
+<font color="#00ff00">Do you **hate it** when your whole inventory is **cluttered by tools**?
 
-Well, with this data pack you can **combine all the tools** into the **Multitool**.
+Well, with this data pack you can **combine all the tools** into the **Multitool**.</font>
+
+[![Download on Modrinth](https://raw.githubusercontent.com/PuckiSilver/static-files/main/link_logos/modrinth_download.png)](https://modrinth.com/project/multitool/versions)
+[![Sourcecode on GitHub](https://raw.githubusercontent.com/PuckiSilver/static-files/main/link_logos/github_source_code.png)](https://github.com/ps-dps/Multitool)
 
 ## **Features**
-If you look at a block, the Multitool **switches to a tool suited to break that block**.
+The Multitool **can always break blocks** meant for the axe, hoe, pickaxe or shovel, no matter what form it is currently in.
+
+If you look at a block, the Multitool **switches to a tool suited for that block** like an axe to strip logs or a shovel to create paths.
 
 When **sneaking** while looking at **tillable blocks**, the Multitool swaps to a **hoe**, so you can create fresh farmland.
 
 You can **enchant** the Multitool!
-It supports any enchantment that you can normally slap on a tool.
+It supports any enchantment that you can normally put onto a tool.
 
-The tool **only loses durability 30% of the time** since it is made from 4 tools.<br>
-This only increases the effective durability by 3.333 times and not 4 times.
+The Multitool **has 3 times the durability** of a regular tool made from the same material.
 
 Mutlitool even supports **resource packs**, like [this one](https://modrinth.com/resourcepack/dukette-halberds) by [Dukette](https://modrinth.com/user/theDukette), it turns the **Multitool into a halberd**!
 
@@ -23,14 +27,6 @@ Mutlitool even supports **resource packs**, like [this one](https://modrinth.com
 ![craft_diamond_multitool](images/craft_diamond_multitool.png)
 
 To **craft** a Multitool, you just need to **combine all four types of tools** of the same material in the crafting grid.
-
-You will see a `Knowledge Book` as the crafting result, take it out and it will get replaced by the Multitool.
-
-If you are OP you can **give yourself the tool** by running the following command:
-```mcfunction
-loot give @s loot ps-multitool:{material}_multitool
-```
-Make sure to replace `{material}` with one of `golden`, `wooden`, `stone`, `diamond` or `netherite`.
 
 ## **Adding or removing a Multitool**
 You can generate your **own Multitool** data pack simply by **configuring a config** and building it
