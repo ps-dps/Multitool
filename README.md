@@ -1,4 +1,4 @@
-# <img src="https://raw.githubusercontent.com/ps-dps/MobArmory/main/images/pack.png" height=25> **Multitool**
+# <img src="https://raw.githubusercontent.com/ps-dps/Multitool/main/images/pack.png" height=25> **Multitool**
 
 <font color="#00ff00">Do you **hate it** when your whole inventory is **cluttered by tools**?
 
@@ -23,8 +23,8 @@ Mutlitool even supports **resource packs**, like [this one](https://modrinth.com
 
 ## **How to get**
 
-![craft_stone_multitool](https://raw.githubusercontent.com/ps-dps/MobArmory/main/images/craft_stone_multitool.png)
-![craft_diamond_multitool](https://raw.githubusercontent.com/ps-dps/MobArmory/main/images/craft_diamond_multitool.png)
+![craft_stone_multitool](https://raw.githubusercontent.com/ps-dps/Multitool/main/images/craft_stone_multitool.png)
+![craft_diamond_multitool](https://raw.githubusercontent.com/ps-dps/Multitool/main/images/craft_diamond_multitool.png)
 
 To **craft** a Multitool, you just need to **combine all four types of tools** of the same material in the crafting grid.
 
