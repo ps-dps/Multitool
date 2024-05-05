@@ -185,4 +185,53 @@ def generate_from_config(ctx: Context, cfg: dict):
 
     ctx.data.item_tags['ps-multitool:tools'] = ItemTag({ "values": [
         { "id": f'#ps-multitool:tool/{tool}', "required": False } for tool in tools ]})
+
+    netherite_material = [m for m in materials if m["m"] == "minecraft:netherite"][0]
+    ctx.data.item_modifiers["ps-multitool:smithing/upgrade_to_netherite"] = ItemModifier({
+        "function": "minecraft:set_components",
+        "components": {
+            "minecraft:max_damage": netherite_material["d"],
+            "minecraft:tool": { "rules": [{
+                "blocks": netherite_material.get("incorrect","#minecraft:incorrect_for_netherite_tool"),
+                "correct_for_drops": False,
+            }] + [{
+                "blocks": f'#minecraft:mineable/{tool}',
+                "correct_for_drops": True,
+                "speed": netherite_material["s"],
+            } for tool in tools]}
+        }
+    })
+
+    for tool in tools:
+        ctx.data.advancements[f'ps-multitool:smithing/{tool}'] = Advancement({
+            "criteria": { "requirement": {
+                "trigger": "minecraft:recipe_crafted",
+                "conditions": {
+                    "recipe_id": f'minecraft:netherite_{tool}_smithing',
+                    "ingredients": [{
+                        "items": f'minecraft:diamond_{tool}',
+                        "predicates": { "minecraft:custom_data": { "ps-multitool": 1 }}
+                    }]
+            }}},
+            "rewards": { "function": "ps-multitool:smithing/craft" }
+        })
+    ctx.data.functions["ps-multitool:smithing/craft"] = Function(
+        [f'advancement revoke @s only ps-multitool:smithing/{tool}' for tool in tools] + [
+        "execute if items entity @s player.cursor #ps-multitool:material/netherite[custom_data~{ps-multitool:1b},max_damage=4683] run " +
+            "return run item modify entity @s player.cursor ps-multitool:smithing/upgrade_to_netherite",
+        "execute if items entity @s hotbar.* #ps-multitool:material/netherite[custom_data~{ps-multitool:1b},max_damage=4683] run " +
+            "return run function ps-multitool:smithing/replace_in_hotbar",
+        "execute if items entity @s inventory.* #ps-multitool:material/netherite[custom_data~{ps-multitool:1b},max_damage=4683] run " +
+            "return run function ps-multitool:smithing/replace_in_inventory",
+        "tellraw @s {\"text\":\"Coudn't convert Multitool to netherite, do NOT drop the output out of the smithing table!\",\"color\":\"red\"}",
+    ])
+    ctx.data.functions["ps-multitool:smithing/replace_in_hotbar"] = Function([
+        "execute if items entity @s hotbar."+str(i)+" #ps-multitool:material/netherite[custom_data~{ps-multitool:1b},max_damage=4683] run return run item modify entity @s hotbar."+str(i)+" ps-multitool:smithing/upgrade_to_netherite"
+        for i in range(9)
+    ])
+    ctx.data.functions["ps-multitool:smithing/replace_in_inventory"] = Function([
+        "execute if items entity @s inventory."+str(i)+" #ps-multitool:material/netherite[custom_data~{ps-multitool:1b},max_damage=4683] run return run item modify entity @s inventory."+str(i)+" ps-multitool:smithing/upgrade_to_netherite"
+        for i in range(27)
+    ])
+
     return True
