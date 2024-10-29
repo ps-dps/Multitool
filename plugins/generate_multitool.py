@@ -132,7 +132,7 @@ def generate_from_config(ctx: Context, cfg: dict):
         ctx.data.recipes[f'ps-multitool:{material_name}_multitool'] = Recipe({
             "type": "minecraft:crafting_shapeless",
             "category": "equipment",
-            "ingredients": [{ "item": f'{overwrites.get(material["m"]+"_"+tool,material["m"]+"_"+tool)}' } for tool in tools ],
+            "ingredients": [f'{overwrites.get(material["m"]+"_"+tool,material["m"]+"_"+tool)}' for tool in tools ],
             "result": {
                 "id": f'{overwrites.get(material["m"]+"_pickaxe",material["m"]+"_pickaxe")}',
                 "components": {
