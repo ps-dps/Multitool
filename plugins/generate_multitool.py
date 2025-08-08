@@ -136,7 +136,6 @@ def generate_from_config(ctx: Context, cfg: dict):
             "result": {
                 "id": f'{overwrites.get(material["m"]+"_pickaxe",material["m"]+"_pickaxe")}',
                 "components": {
-                    "minecraft:custom_model_data": 74201,
                     "minecraft:custom_data": { "ps-multitool": 1 },
                     "minecraft:item_name": ('['
                         '{ "text": "M", "color": "#00ff00", "italic": False },'
