@@ -137,17 +137,17 @@ def generate_from_config(ctx: Context, cfg: dict):
                 "id": f'{overwrites.get(material["m"]+"_pickaxe",material["m"]+"_pickaxe")}',
                 "components": {
                     "minecraft:custom_data": { "ps-multitool": 1 },
-                    "minecraft:item_name": ('['
-                        '{ "text": "M", "color": "#00ff00", "italic": False },'
-                        '{ "text": "u", "color": "#00e093", "italic": False },'
-                        '{ "text": "l", "color": "#00baca", "italic": False },'
-                        '{ "text": "t", "color": "#008fca", "italic": False },'
-                        '{ "text": "i", "color": "#00639a", "italic": False },'
-                        '{ "text": "t", "color": "#008fca", "italic": False },'
-                        '{ "text": "o", "color": "#00baca", "italic": False },'
-                        '{ "text": "o", "color": "#00e093", "italic": False },'
-                        '{ "text": "l", "color": "#00ff00", "italic": False }'
-                    ']'),
+                    "minecraft:item_name": [
+                        { "text": "M", "color": "#00ff00", "italic": False },
+                        { "text": "u", "color": "#00e093", "italic": False },
+                        { "text": "l", "color": "#00baca", "italic": False },
+                        { "text": "t", "color": "#008fca", "italic": False },
+                        { "text": "i", "color": "#00639a", "italic": False },
+                        { "text": "t", "color": "#008fca", "italic": False },
+                        { "text": "o", "color": "#00baca", "italic": False },
+                        { "text": "o", "color": "#00e093", "italic": False },
+                        { "text": "l", "color": "#00ff00", "italic": False }
+                    ],
                     "minecraft:max_damage": material["d"],
                     "minecraft:tool": { "rules": rules },
                 }
