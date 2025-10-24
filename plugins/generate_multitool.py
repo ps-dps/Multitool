@@ -58,11 +58,13 @@ def add_multitool_base(ctx: Context):
     ctx.data.functions["ps-multitool:multitool_tick"] = Function([
         "execute unless score .ray_range ps-multitool matches 1.. run scoreboard players set .ray_range ps-multitool 17",
         "scoreboard players remove .ray_range ps-multitool 1",
-        "execute if block ~ ~ ~ #minecraft:mineable/axe unless items entity @s weapon.mainhand #ps-multitool:tool/axe run item modify entity @s weapon.mainhand ps-multitool:swap/axe",
+        "execute if block ~ ~ ~ #minecraft:mineable/axe unless predicate ps-multitool:sneak_transform/axe_to_shovel unless items entity @s weapon.mainhand #ps-multitool:tool/axe run item modify entity @s weapon.mainhand ps-multitool:swap/axe",
+        "execute if predicate ps-multitool:sneak_transform/axe_to_shovel unless items entity @s weapon.mainhand #ps-multitool:tool/shovel run item modify entity @s weapon.mainhand ps-multitool:swap/shovel",
         "execute if block ~ ~ ~ #minecraft:mineable/hoe unless items entity @s weapon.mainhand #ps-multitool:tool/hoe run item modify entity @s weapon.mainhand ps-multitool:swap/hoe",
-        "execute if block ~ ~ ~ #minecraft:mineable/pickaxe unless items entity @s weapon.mainhand #ps-multitool:tool/pickaxe run item modify entity @s weapon.mainhand ps-multitool:swap/pickaxe",
-        "execute if block ~ ~ ~ #minecraft:mineable/shovel unless predicate ps-multitool:should_hoe unless items entity @s weapon.mainhand #ps-multitool:tool/shovel run item modify entity @s weapon.mainhand ps-multitool:swap/shovel",
-        "execute if predicate ps-multitool:should_hoe unless items entity @s weapon.mainhand #ps-multitool:tool/hoe run item modify entity @s weapon.mainhand ps-multitool:swap/hoe",
+        "execute if block ~ ~ ~ #minecraft:mineable/pickaxe unless predicate ps-multitool:sneak_transform/pickaxe_to_axe unless items entity @s weapon.mainhand #ps-multitool:tool/pickaxe run item modify entity @s weapon.mainhand ps-multitool:swap/pickaxe",
+        "execute if predicate ps-multitool:sneak_transform/pickaxe_to_axe unless items entity @s weapon.mainhand #ps-multitool:tool/axe run item modify entity @s weapon.mainhand ps-multitool:swap/axe",
+        "execute if block ~ ~ ~ #minecraft:mineable/shovel unless predicate ps-multitool:sneak_transform/shovel_to_hoe unless items entity @s weapon.mainhand #ps-multitool:tool/shovel run item modify entity @s weapon.mainhand ps-multitool:swap/shovel",
+        "execute if predicate ps-multitool:sneak_transform/shovel_to_hoe unless items entity @s weapon.mainhand #ps-multitool:tool/hoe run item modify entity @s weapon.mainhand ps-multitool:swap/hoe",
         "execute if score .ray_range ps-multitool matches 1.. unless block ~ ~ ~ #ps-multitool:mineable positioned ^ ^ ^0.3 run function ps-multitool:multitool_tick",
     ])
     ctx.data.predicates["ps-multitool:has_multitool"] = Predicate(
@@ -71,12 +73,26 @@ def add_multitool_base(ctx: Context):
                 "items": "#ps-multitool:tools",
                 "predicates": { "minecraft:custom_data": { "ps-multitool": 1 }}
     }}}})
-    ctx.data.predicates["ps-multitool:should_hoe"] = Predicate({
+    ctx.data.predicates["ps-multitool:sneak_transform/shovel_to_hoe"] = Predicate({
         "condition": "minecraft:all_of", "terms": [
             { "condition": "minecraft:entity_properties", "entity": "this", "predicate": {
                 "flags": { "is_sneaking": True }}},
             { "condition": "minecraft:location_check", "predicate": {
                 "block": { "blocks": "#ps-multitool:tillable" }}
+    }]})
+    ctx.data.predicates["ps-multitool:sneak_transform/axe_to_shovel"] = Predicate({
+        "condition": "minecraft:all_of", "terms": [
+            { "condition": "minecraft:entity_properties", "entity": "this", "predicate": {
+                "flags": { "is_sneaking": True }}},
+            { "condition": "minecraft:location_check", "predicate": {
+                "block": { "blocks": "#minecraft:campfires" }}
+    }]})
+    ctx.data.predicates["ps-multitool:sneak_transform/pickaxe_to_axe"] = Predicate({
+        "condition": "minecraft:all_of", "terms": [
+            { "condition": "minecraft:entity_properties", "entity": "this", "predicate": {
+                "flags": { "is_sneaking": True }}},
+            { "condition": "minecraft:location_check", "predicate": {
+                "block": { "blocks": "#ps-multitool:scrapeable" }}
     }]})
     ctx.data.block_tags["ps-multitool:tillable"] = BlockTag({ "values": [
         { "required": False, "id": "minecraft:grass_block" },
@@ -91,6 +107,9 @@ def add_multitool_base(ctx: Context):
         { "required": False, "id": "#minecraft:mineable/shovel" },
         { "required": False, "id": "#minecraft:mineable/axe" },
         { "required": False, "id": "#minecraft:mineable/hoe" },
+    ]})
+    ctx.data.block_tags["ps-multitool:scrapeable"] = BlockTag({ "values": [
+        { "required": False, "id": id } for id in ["#minecraft:copper", "#minecraft:copper_chests", "#minecraft:copper_golem_statues", "minecraft:lightning_rod", "minecraft:exposed_lightning_rod", "minecraft:weathered_lightning_rod", "minecraft:oxidized_lightning_rod", "minecraft:waxed_lightning_rod", "minecraft:waxed_exposed_lightning_rod", "minecraft:waxed_weathered_lightning_rod", "minecraft:waxed_oxidized_lightning_rod", "minecraft:copper_lantern", "minecraft:exposed_copper_lantern", "minecraft:weathered_copper_lantern", "minecraft:oxidized_copper_lantern", "minecraft:waxed_copper_lantern", "minecraft:waxed_exposed_copper_lantern", "minecraft:waxed_weathered_copper_lantern", "minecraft:waxed_oxidized_copper_lantern", "minecraft:copper_bars", "minecraft:exposed_copper_bars", "minecraft:weathered_copper_bars", "minecraft:oxidized_copper_bars", "minecraft:waxed_copper_bars", "minecraft:waxed_exposed_copper_bars", "minecraft:waxed_weathered_copper_bars", "minecraft:waxed_oxidized_copper_bars", "minecraft:copper_trapdoor", "minecraft:exposed_copper_trapdoor", "minecraft:weathered_copper_trapdoor", "minecraft:oxidized_copper_trapdoor", "minecraft:waxed_copper_trapdoor", "minecraft:waxed_exposed_copper_trapdoor", "minecraft:waxed_weathered_copper_trapdoor", "minecraft:waxed_oxidized_copper_trapdoor", "minecraft:copper_chain", "minecraft:exposed_copper_chain", "minecraft:weathered_copper_chain", "minecraft:oxidized_copper_chain", "minecraft:waxed_copper_chain", "minecraft:waxed_exposed_copper_chain", "minecraft:waxed_weathered_copper_chain", "minecraft:waxed_oxidized_copper_chain", "minecraft:copper_door", "minecraft:exposed_copper_door", "minecraft:weathered_copper_door", "minecraft:oxidized_copper_door", "minecraft:waxed_copper_door", "minecraft:waxed_exposed_copper_door", "minecraft:waxed_weathered_copper_door", "minecraft:waxed_oxidized_copper_door", "minecraft:cut_copper_slab", "minecraft:exposed_cut_copper_slab", "minecraft:weathered_cut_copper_slab", "minecraft:oxidized_cut_copper_slab", "minecraft:waxed_cut_copper_slab", "minecraft:waxed_exposed_cut_copper_slab", "minecraft:waxed_weathered_cut_copper_slab", "minecraft:waxed_oxidized_cut_copper_slab", "minecraft:cut_copper_stairs", "minecraft:exposed_cut_copper_stairs", "minecraft:weathered_cut_copper_stairs", "minecraft:oxidized_cut_copper_stairs", "minecraft:waxed_cut_copper_stairs", "minecraft:waxed_exposed_cut_copper_stairs", "minecraft:waxed_weathered_cut_copper_stairs", "minecraft:waxed_oxidized_cut_copper_stairs", "minecraft:copper_grate", "minecraft:exposed_copper_grate", "minecraft:weathered_copper_grate", "minecraft:oxidized_copper_grate", "minecraft:waxed_copper_grate", "minecraft:waxed_exposed_copper_grate", "minecraft:waxed_weathered_copper_grate", "minecraft:waxed_oxidized_copper_grate", "minecraft:copper_bulb", "minecraft:exposed_copper_bulb", "minecraft:weathered_copper_bulb", "minecraft:oxidized_copper_bulb", "minecraft:waxed_copper_bulb", "minecraft:waxed_exposed_copper_bulb", "minecraft:waxed_weathered_copper_bulb", "minecraft:waxed_oxidized_copper_bulb", "minecraft:chiseled_copper", "minecraft:exposed_chiseled_copper", "minecraft:weathered_chiseled_copper", "minecraft:oxidized_chiseled_copper", "minecraft:waxed_chiseled_copper", "minecraft:waxed_exposed_chiseled_copper", "minecraft:waxed_weathered_chiseled_copper", "minecraft:waxed_oxidized_chiseled_copper", "minecraft:cut_copper", "minecraft:exposed_cut_copper", "minecraft:weathered_cut_copper", "minecraft:oxidized_cut_copper", "minecraft:waxed_cut_copper", "minecraft:waxed_exposed_cut_copper", "minecraft:waxed_weathered_cut_copper", "minecraft:waxed_oxidized_cut_copper"]
     ]})
 
 def generate_from_config(ctx: Context, cfg: dict):

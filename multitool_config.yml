@@ -5,6 +5,9 @@ materials:
   - m: minecraft:stone
     d: 393
     s: 4
+  - m: minecraft:copper
+    d: 190
+    s: 5
   - m: minecraft:iron
     d: 750
     s: 6
